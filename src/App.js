@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import Main from './components/main';
+import React, {Component} from 'react';
+// import { render } from '@testing-library/react';
+export const AuthContext = React.createContext(null)
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  state = {
+    isLoggedIn: false
+  }
+  
+  render() {
+    const token = localStorage.getItem("token")
+    if (token) {
+      this.state.isLoggedIn = true;
+    }
+    // console.log(this.state)
+    return (
+      <AuthContext.Provider value={{isLoggedIn: this.state.isLoggedIn, setIsLoggedIn: (v) => this.setState({ isLoggedIn: v })}}>
+        <div>
+          <Main />
+        </div>
+      </AuthContext.Provider>
+
+
+    );
+  }
 }
+
+  
 
 export default App;
